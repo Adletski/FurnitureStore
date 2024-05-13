@@ -23,11 +23,9 @@ struct AuthorizationView: View {
     }
     
     @ObservedObject var viewModel = AuthorizationViewModel()
-    
     @State private var isErrorShown = false
     @State private var isNavigationActive = false
     @State private var isPasswordForgotten = false
-    
     @FocusState private var focusedField: Int?
     
     var body: some View {

@@ -31,15 +31,15 @@ struct DetailsView: View {
     @State var scale: CGFloat = 1.0
     @Environment(\.dismiss) var dismiss
     
-//    var magnification: some Gesture {
-//           MagnificationGesture()
-//               .onChanged { value in
-//                   scale = value
-//               }
-//               .onEnded { _ in
-//                   scale = 1
-//               }
-//       }
+    var magnification: some Gesture {
+           MagnificationGesture()
+               .onChanged { value in
+                   scale = value
+               }
+               .onEnded { _ in
+                   scale = 1
+               }
+       }
     
     var productDetailModel: GoodsModel
     
@@ -122,7 +122,7 @@ struct DetailsView: View {
                 )
         }
         .navigationBarBackButtonHidden()
-//        .gesture(magnification)
+        .gesture(magnification)
         .onTapGesture {
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
