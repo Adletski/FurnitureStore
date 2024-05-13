@@ -1,0 +1,40 @@
+//
+//  ShopTabBarView.swift
+//  FurnitureStore
+//
+//  Created by Adlet Zhantassov on 13.05.2024.
+//
+
+import SwiftUI
+
+struct ShopTabBarView: View {
+    @State var selection = 0
+    
+    var body: some View {
+        TabView(selection: $selection) {
+            GoodsView()
+                .tabItem {
+                    let image: UIImage = .shop.withRenderingMode(.alwaysTemplate)
+                    Image(uiImage: image)
+                }
+            
+            BasketView()
+                .tabItem {
+                    let image: UIImage = .basket.withRenderingMode(.alwaysTemplate)
+                    Image(uiImage: image)
+                }
+            
+            ProfileView()
+                .tabItem {
+                    let image: UIImage = .face.withRenderingMode(.alwaysTemplate)
+                    Image(uiImage: image)
+                }
+        }
+        .tint(.lightGreen)
+        .navigationBarBackButtonHidden()
+    }
+}
+
+#Preview {
+    ShopTabBarView()
+}
