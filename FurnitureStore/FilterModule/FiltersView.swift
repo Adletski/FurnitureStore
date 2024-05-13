@@ -52,6 +52,7 @@ struct FiltersView: View {
 
             }
             headerView
+                .padding()
             categoryView
             pricesSliderView
             colorsView
@@ -97,7 +98,6 @@ struct FiltersView: View {
                 Button(action: {}) {
                     Image(Constants.rightImage)
                 }
-                .padding()
             }
         }
     }
@@ -108,7 +108,7 @@ struct FiltersView: View {
                 ForEach(icons.indices, id: \.self) { element in
                     ZStack {
                         RoundedRectangle(cornerRadius: 24)
-                            .frame(width: 120, height: 80)
+                            .frame(width: 110, height: 80)
                             .shadow(radius: 1, x: 2, y: 4)
                             .foregroundColor(.goodsBackground)
                             .padding(.bottom)
@@ -117,7 +117,7 @@ struct FiltersView: View {
                     }
                 }
             }
-        }
+        }.padding()
     }
     
     private var pricesSliderView: some View {
@@ -129,13 +129,7 @@ struct FiltersView: View {
                     .padding(.leading)
                 Slider(value: $priceProgress, in: Constants.priceRange, step: Constants.step)
                     .padding(.horizontal)
-                    .overlay(
-                        Text("$\(Int(priceProgress))")
-                            .foregroundColor(.white)
-                            .font(.headline)
-                            .offset(x: sliderOffset(for: priceProgress))
-                    )
-                
+                    .tint(Color(filterViewModel.colorName))
                 HStack {
                     let minAmount = String(Int(Constants.priceRange.lowerBound))
                     let maxAmount = String(Int(priceProgress))
@@ -152,19 +146,17 @@ struct FiltersView: View {
                         .font(.custom(Constants.verdana, size: 24))
                         .bold()
                         .foregroundStyle(.gray)
-                        .padding()
                     Text(filterViewModel.colorName)
-                        .padding(.all)
                         .font(.custom(Constants.verdana, size: 24))
                         .bold()
                         .foregroundStyle(.gray)
                     Spacer()
-                }
+                }.padding()
             }
     }
     
     var colorsView: some View {
-        LazyVGrid(columns: columns, spacing: 16) {
+        LazyVGrid(columns: columns, spacing: 10) {
             ForEach(filterViewModel.colors.indices, id: \.self) { index in
                 makeCircleSectionColor(color: filterViewModel.colors[index], index: index)
             }
@@ -184,7 +176,7 @@ struct FiltersView: View {
             filterViewModel.makeColor(index)
         } label: {
             Circle()
-                .frame(width: 49, height: 40)
+                .frame(width: 29, height: 30)
                 .foregroundColor(Color(color))
                 .overlay {
                     Circle()

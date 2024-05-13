@@ -193,7 +193,7 @@ struct VerificationView: View {
                         Text(String(viewModel.randomSmsCode.map({Character($0)})))
                     }
                     .font(.custom(Constants.verdana, size: 20))
-                    .padding(.top, 8)
+                    .padding()
                     Divider()
                     HStack {
                         Spacer()

@@ -42,6 +42,27 @@ struct MainView: View {
         }
     }
     
+    var asyncImageView: some View {
+        AsyncImage(url: URL(string: "https://picsum.photos/401")) { phase in
+            switch phase {
+            case .empty:
+                ProgressView().accentColor(.accentColor)
+            case .success(let image):
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(20)
+                    .frame(width: 300, height: 200)
+            case .failure(let error):
+                VStack{
+                    Image(systemName: "questionmark")
+                    Text(error.localizedDescription)
+                        .font(.headline)
+                }
+            }
+        }
+    }
+    
     var body: some View {
         ZStack {
             Rectangle()
@@ -55,10 +76,10 @@ struct MainView: View {
                 Text(Constants.title)
                     .font(.custom(Constants.verdana, size: 40))
                     .fontWeight(.bold)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.white)
                 Spacer()
                     .frame(height: 60)
-                Image(.logo)
+                asyncImageView
                 Spacer()
                 HStack {
                     Spacer()
@@ -67,6 +88,7 @@ struct MainView: View {
                             .opacity(isLoading ? 1 : 0)
                         Text(Constants.getStarted)
                             .opacity(isLoading ? 0 : 1)
+                            .font(.system(size: 20, weight: .bold))
                         .foregroundStyle(.linearGradient(colors: [.darkButton, .lightButton], startPoint: .top, endPoint: .bottom))                    }
                     Spacer()
                 }
@@ -95,16 +117,17 @@ struct MainView: View {
                     .frame(height: 75)
                 Text(Constants.dontHaveAccount)
                     .font(.custom(Constants.verdana, size: 16))
+                    .foregroundColor(.white)
                     .padding(.zero)
                     .opacity(isButtonShown ? 1 : 0)
                 Spacer()
                     .frame(height: 12)
                 Button(action: {}, label: {
-                    
                     VStack (spacing: 8) {
                         NavigationLink(destination: AuthorizationView()) {
                             Text(Constants.signIn)
                                 .font(.custom(Constants.verdana, size: 28))
+                                .foregroundColor(.white)
                                 .fontWeight(.bold)
                                 .opacity(isSignInButtonShown ? 1 : 0)
                                 .offset(x: isSignInButtonShown ? 0 : Constants.signInOffsetX)
