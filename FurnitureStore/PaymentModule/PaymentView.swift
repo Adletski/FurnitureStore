@@ -272,8 +272,8 @@ struct PaymentView: View {
                     Spacer()
                 }
             )
-//            .rotation3DEffect(
-//                Angle(degrees: frontDegree), axis: (x: 0.0, y: 1.0, z: 0.0))
+            .rotation3DEffect(
+                Angle(degrees: frontDegree), axis: (x: 0.0, y: 1.0, z: 0.0))
     }
     
     private var cardBackView: some View {
@@ -300,8 +300,8 @@ struct PaymentView: View {
                         .foregroundStyle(.white)
                 }
             )
-//            .rotation3DEffect(
-//                Angle(degrees: backDegree), axis: (x: 0.0, y: 1.0, z: 0.0))
+            .rotation3DEffect(
+                Angle(degrees: backDegree), axis: (x: 0.0, y: 1.0, z: 0.0))
     }
     
     private func addNowAction() {

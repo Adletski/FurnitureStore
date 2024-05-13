@@ -101,8 +101,7 @@ struct VerificationView: View {
                 Text(Constants.messageToGetCode)
                     .font(.custom(Constants.verdana, size: 16))
                     .offset(y: -20)
-//                Button(action: continueAction) {
-                Button(action: {}) {
+                Button(action: continueAction) {
                     Spacer()
                     ZStack {
                         Text(Constants.buttonTitle)
@@ -165,7 +164,7 @@ struct VerificationView: View {
                         .foregroundStyle(.darkButton)
                 }
             })
-//            .blur(radius: isAlertShown ? 10 : 0)
+            .blur(radius: isAlertShown ? 10 : 0)
             
             if isAlertShown {
                 alertView
@@ -194,7 +193,7 @@ struct VerificationView: View {
                         Text(String(viewModel.randomSmsCode.map({Character($0)})))
                     }
                     .font(.custom(Constants.verdana, size: 20))
-                    .padding(.top, 8)
+                    .padding()
                     Divider()
                     HStack {
                         Spacer()
@@ -228,15 +227,15 @@ struct VerificationView: View {
             )
     }
     
-//    private func continueAction() {
-//        isContinued = true
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-//            isContinued = false
-//            withAnimation {
-//                isSmsResendShown = true
-//            }
-//        })
-//    }
+    private func continueAction() {
+        isContinued = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+            isContinued = false
+            withAnimation {
+                isSmsResendShown = true
+            }
+        })
+    }
     
     private func fillInCode() {
         smsNumbers = viewModel.randomSmsCode

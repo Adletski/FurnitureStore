@@ -11,9 +11,9 @@ struct AuthorizationView: View {
     private enum Constants {
         static let login = "Log in"
         static let signUp = "Sign up"
-        static let phonePlaceholder = "+●(●●●)●●●-●●-●●"
+        static let phonePlaceholder = ""
         static let password = "Password"
-        static let passwordPlaceholder = "123456789012345"
+        static let passwordPlaceholder = ""
         static let verdana = "Verdana"
         static let supportService = "Please call to support service"
         static let supportPhone = "8-800-800-0008"
@@ -23,12 +23,11 @@ struct AuthorizationView: View {
     }
     
     @ObservedObject var viewModel = AuthorizationViewModel()
-    
     @State private var isErrorShown = false
     @State private var isNavigationActive = false
     @State private var isPasswordForgotten = false
-    
     @FocusState private var focusedField: Int?
+    @State var password = ""
     
     var body: some View {
         VStack {
@@ -84,10 +83,8 @@ struct AuthorizationView: View {
             
             Group {
                 loginTextField
-                Spacer()
-                    .frame(height: 12)
                 Divider()
-                    .overlay(isErrorShown ? .red : .black)
+                    .overlay(isErrorShown ? .red : .gray)
                 Spacer()
                     .frame(height: 24)
                 HStack {
@@ -97,15 +94,8 @@ struct AuthorizationView: View {
                     Spacer()
                 }
                 
-                SecuredTextFieldView(text: $viewModel.password, placeHolder: Constants.passwordPlaceholder)
-                    .focused($focusedField, equals: 2)
-                    .onSubmit {
-                        checkFields()
-                    }
-                Spacer()
-                    .frame(height: 12)
-                Divider()
-                    .overlay(isErrorShown ? .red : .black)
+                SecuredTextFieldView(text: $password, placeHolder: "123123123123")
+                Divider().overlay(isErrorShown ? .red : .gray)
             }
             .foregroundStyle(isErrorShown ? .red : .darkButton)
             .offset(y: isErrorShown ? 5 : 0)
@@ -181,15 +171,14 @@ struct AuthorizationView: View {
     
     private func checkFields() {
         if viewModel.phoneNumber.isEmpty || viewModel.password.isEmpty {
-            withAnimation(.spring(Spring(duration: 0.3, bounce: 0.85), blendDuration: 0.9)) {
+            withAnimation(.easeInOut(duration: 1.0)) {
                 isErrorShown = true
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                 isErrorShown = false
                 if viewModel.password.isEmpty {
                     focusedField = 2
                 }
-                
                 if viewModel.phoneNumber.isEmpty {
                     focusedField = 1
                 }

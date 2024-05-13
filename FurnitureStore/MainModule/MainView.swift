@@ -28,19 +28,40 @@ struct MainView: View {
     @State var isNavigationActive = false
     @State var isLoading = false
     
-//    var longPressGesture: some Gesture {
-//        LongPressGesture(minimumDuration: 0.5)
-//            .onEnded { _ in
-//                withAnimation {
-//                    isDeveloperWindowShown = true
-//                }
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
-//                    withAnimation {
-//                        isDeveloperWindowShown = false
-//                }
-//            })
-//        }
-//    }
+    var longPressGesture: some Gesture {
+        LongPressGesture(minimumDuration: 0.5)
+            .onEnded { _ in
+                withAnimation {
+                    isDeveloperWindowShown = true
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
+                    withAnimation {
+                        isDeveloperWindowShown = false
+                }
+            })
+        }
+    }
+    
+    var asyncImageView: some View {
+        AsyncImage(url: URL(string: "https://picsum.photos/401")) { phase in
+            switch phase {
+            case .empty:
+                ProgressView().accentColor(.accentColor)
+            case .success(let image):
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(20)
+                    .frame(width: 300, height: 200)
+            case .failure(let error):
+                VStack{
+                    Image(systemName: "questionmark")
+                    Text(error.localizedDescription)
+                        .font(.headline)
+                }
+            }
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -55,10 +76,10 @@ struct MainView: View {
                 Text(Constants.title)
                     .font(.custom(Constants.verdana, size: 40))
                     .fontWeight(.bold)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.white)
                 Spacer()
                     .frame(height: 60)
-                Image(.logo)
+                asyncImageView
                 Spacer()
                 HStack {
                     Spacer()
@@ -67,6 +88,7 @@ struct MainView: View {
                             .opacity(isLoading ? 1 : 0)
                         Text(Constants.getStarted)
                             .opacity(isLoading ? 0 : 1)
+                            .font(.system(size: 20, weight: .bold))
                         .foregroundStyle(.linearGradient(colors: [.darkButton, .lightButton], startPoint: .top, endPoint: .bottom))                    }
                     Spacer()
                 }
@@ -81,10 +103,10 @@ struct MainView: View {
                 )
                 .opacity(isButtonShown ? 1 : 0)
                 .offset(x: isButtonShown ? 0 : Constants.getStartedOffsetX)
-//                .onTapGesture {
-//                    startLoading()
-//                }
-//                .gesture(longPressGesture)
+                .onTapGesture {
+                    startLoading()
+                }
+                .gesture(longPressGesture)
                 NavigationLink(
                     destination: ShopTabBarView(),
                     isActive: $isNavigationActive,
@@ -95,16 +117,17 @@ struct MainView: View {
                     .frame(height: 75)
                 Text(Constants.dontHaveAccount)
                     .font(.custom(Constants.verdana, size: 16))
+                    .foregroundColor(.white)
                     .padding(.zero)
                     .opacity(isButtonShown ? 1 : 0)
                 Spacer()
                     .frame(height: 12)
                 Button(action: {}, label: {
-                    
                     VStack (spacing: 8) {
                         NavigationLink(destination: AuthorizationView()) {
                             Text(Constants.signIn)
                                 .font(.custom(Constants.verdana, size: 28))
+                                .foregroundColor(.white)
                                 .fontWeight(.bold)
                                 .opacity(isSignInButtonShown ? 1 : 0)
                                 .offset(x: isSignInButtonShown ? 0 : Constants.signInOffsetX)
@@ -122,16 +145,16 @@ struct MainView: View {
             .blur(radius: isDeveloperWindowShown ? 10 : 0)
             developerView
         }
-//        .onAppear {
-//            withAnimation(.spring()) {
-//                isButtonShown = true
-//            }
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                withAnimation(.spring()) {
-//                    isSignInButtonShown = true
-//                }
-//            }
-//        }
+        .onAppear {
+            withAnimation(.spring()) {
+                isButtonShown = true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                withAnimation(.spring()) {
+                    isSignInButtonShown = true
+                }
+            }
+        }
     }
     
     private var developerView: some View {
@@ -144,14 +167,14 @@ struct MainView: View {
             .opacity(isDeveloperWindowShown ? 1 : 0)
     }
     
-//    private func startLoading() {
-//        withAnimation {
-//            isLoading = true
-//        }
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-//            isNavigationActive = true
-//        })
-//    }
+    private func startLoading() {
+        withAnimation {
+            isLoading = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            isNavigationActive = true
+        })
+    }
 }
 
 #Preview {

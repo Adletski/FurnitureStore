@@ -30,12 +30,11 @@ struct GoodsView: View {
                     .frame(height: Constants.gradientHeight)
                     .ignoresSafeArea()
                     .frame(height: 10)
-                searchTextFieldView
-                searchAndFilterView
+                searchTextFieldView.padding(.trailing, 40)
+                searchAndFilterView.padding(.trailing, 10)
             }
             Spacer()
-            sumView
-                .padding().frame(height: 80)
+            sumView.padding().frame(height: 80)
             scrollView
         }
         .navigationBarBackButtonHidden(true)
@@ -44,7 +43,7 @@ struct GoodsView: View {
     var searchTextFieldView: some View {
         HStack {
             TextField(Constants.search, text: $textFild)
-                .padding(.leading, 40)
+                .padding(.leading, 60)
                 .frame(width: 312, height: 48)
                 .background(.white)
                 .cornerRadius(24)
@@ -83,10 +82,9 @@ struct GoodsView: View {
         ScrollView(.vertical, showsIndicators: false) {
             ForEach(goodsViewModel.goods.indices, id: \.self) { furniture in
                 VStack {
-                    HStack {
+                    HStack(spacing: 30) {
                         Image(goodsViewModel.goods[furniture].nameImage)
-                            .frame(width: 140, height: 140)
-                        
+                            .frame(width: 120, height: 100)
                         VStack(alignment: .leading) {
                             Text(goodsViewModel.goods[furniture].nameText)
                                 .font(.custom(Constants.verdana, size: 24))
@@ -94,13 +92,13 @@ struct GoodsView: View {
                             
                             HStack {
                                 Text("$\(goodsViewModel.goods[furniture].price)")
-                                    .font(.custom(Constants.verdana, size: 24))
+                                    .font(.custom(Constants.verdana, size: 20))
                                     .bold()
                                     .foregroundStyle(.greenCost)
                                 
                                 Text("$\(goodsViewModel.goods[furniture].lastPrice)")
                                     .foregroundStyle(.gray)
-                                    .font(.custom(Constants.verdana, size: 24))
+                                    .font(.custom(Constants.verdana, size: 20))
                                     .strikethrough(true, color: .black)
                             }
                             VStack {
@@ -124,7 +122,7 @@ struct GoodsView: View {
                                         }
                                     }
                                     .foregroundColor(.gray)
-                                    .font(.custom(Constants.verdana, size: 18))
+                                    .font(.custom(Constants.verdana, size: 13))
                                     .bold()
                                 }
                             }
@@ -139,9 +137,9 @@ struct GoodsView: View {
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.white)
-                    .cornerRadius(10)
+                    .cornerRadius(30)
                     .shadow(radius: 5)
-                    .padding(.horizontal)
+                    .padding()
                 }
             }
         }
