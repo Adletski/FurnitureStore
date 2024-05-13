@@ -84,16 +84,12 @@ struct AuthorizationView: View {
             
             Group {
                 loginTextField
-                
                 Spacer()
                     .frame(height: 12)
-                
                 Divider()
                     .overlay(isErrorShown ? .red : .black)
-                
                 Spacer()
                     .frame(height: 24)
-                
                 HStack {
                     Text(Constants.password)
                         .font(.custom(Constants.verdana, size: 16))
@@ -106,10 +102,8 @@ struct AuthorizationView: View {
                     .onSubmit {
                         checkFields()
                     }
-            
                 Spacer()
                     .frame(height: 12)
-                
                 Divider()
                     .overlay(isErrorShown ? .red : .black)
             }
@@ -118,10 +112,8 @@ struct AuthorizationView: View {
             .font(.custom(Constants.verdana, size: 20))
             .bold()
             .padding(.horizontal, 20)
-            
             Spacer()
                 .frame(height: 95)
-            
             Button(action: {
                 checkFields()
             }, label: {
@@ -139,25 +131,19 @@ struct AuthorizationView: View {
                         .frame(height: 55)
                         .padding(.horizontal, 55))
             })
-            
             NavigationLink("", destination: ShopTabBarView(), isActive: $isNavigationActive)
-    
             Spacer()
                 .frame(height: 24)
-            
             Group {
                 Text(Constants.forgotPassword)
                     .onTapGesture {
                         isPasswordForgotten = true
                     }
-                
                 Spacer()
                     .frame(height: 18)
-                
                 NavigationLink(destination: VerificationView()) {
                     Text(Constants.checkVerification)
                 }
-                
                 Divider()
                     .overlay(.lightGray)
                     .padding(.horizontal, 116)
@@ -165,10 +151,8 @@ struct AuthorizationView: View {
             .font(.custom(Constants.verdana, size: 20))
             .fontWeight(.bold)
             .foregroundColor(.gray)
-            
             Spacer()
         }
-        
         .onAppear() {
             focusedField = 1
         }

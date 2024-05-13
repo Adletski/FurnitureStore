@@ -28,19 +28,19 @@ struct MainView: View {
     @State var isNavigationActive = false
     @State var isLoading = false
     
-    var longPressGesture: some Gesture {
-        LongPressGesture(minimumDuration: 0.5)
-            .onEnded { _ in
-                withAnimation {
-                    isDeveloperWindowShown = true
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
-                    withAnimation {
-                        isDeveloperWindowShown = false
-                }
-            })
-        }
-    }
+//    var longPressGesture: some Gesture {
+//        LongPressGesture(minimumDuration: 0.5)
+//            .onEnded { _ in
+//                withAnimation {
+//                    isDeveloperWindowShown = true
+//                }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
+//                    withAnimation {
+//                        isDeveloperWindowShown = false
+//                }
+//            })
+//        }
+//    }
     
     var body: some View {
         ZStack {
@@ -81,10 +81,10 @@ struct MainView: View {
                 )
                 .opacity(isButtonShown ? 1 : 0)
                 .offset(x: isButtonShown ? 0 : Constants.getStartedOffsetX)
-                .onTapGesture {
-                    startLoading()
-                }
-                .gesture(longPressGesture)
+//                .onTapGesture {
+//                    startLoading()
+//                }
+//                .gesture(longPressGesture)
                 NavigationLink(
                     destination: ShopTabBarView(),
                     isActive: $isNavigationActive,
@@ -122,17 +122,16 @@ struct MainView: View {
             .blur(radius: isDeveloperWindowShown ? 10 : 0)
             developerView
         }
-        .onAppear {
-            withAnimation(.spring()) {
-                isButtonShown = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                withAnimation(.spring()) {
-                    isSignInButtonShown = true
-                }
-            }
-        }
-        
+//        .onAppear {
+//            withAnimation(.spring()) {
+//                isButtonShown = true
+//            }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                withAnimation(.spring()) {
+//                    isSignInButtonShown = true
+//                }
+//            }
+//        }
     }
     
     private var developerView: some View {
@@ -145,14 +144,14 @@ struct MainView: View {
             .opacity(isDeveloperWindowShown ? 1 : 0)
     }
     
-    private func startLoading() {
-        withAnimation {
-            isLoading = true
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            isNavigationActive = true
-        })
-    }
+//    private func startLoading() {
+//        withAnimation {
+//            isLoading = true
+//        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+//            isNavigationActive = true
+//        })
+//    }
 }
 
 #Preview {

@@ -179,7 +179,6 @@ struct FiltersView: View {
         return offset
     }
 
-    
     func makeCircleSectionColor(color: String, index: Int) -> some View {
         Button {
             filterViewModel.makeColor(index)
